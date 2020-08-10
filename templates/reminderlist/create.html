@@ -1,0 +1,10 @@
+{% extends 'reminderlist/base.html' %}
+
+{% block content %}
+<h1>Create todo list</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}
