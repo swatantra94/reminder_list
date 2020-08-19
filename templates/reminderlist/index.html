@@ -1,14 +1,23 @@
-{% extends 'reminderlist/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
-<h1>Here is your to do list</h1>
-    <ul>
-    {% for item in todolist.all %}
-        <span><li>{{item}}</li></span>
-        <br>
-        <a href="{% url 'delete_activity' item.id %}">Delete</a>
-        <br>
-    {% endfor %}
-    </ul>
-    <a href="{% url 'create_activity' %}">Add Todo</a>
+
+<div class="row">
+    <div class="col s12 m6">
+        <ul>
+            {% for item in todolist.all %}
+                <div class="card blue-grey darken-1 row">
+                    <div class="card-content white-text">
+                        <div class="card-title"><li>{{item}}</li></div>
+                        <p>{{ item.description }}</p>
+                        </div>
+                        <div class="card-action">
+                        <a href="{% url 'delete_activity' item.id %}">Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+  </div>
+        
 {% endblock %}
