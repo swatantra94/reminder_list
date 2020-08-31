@@ -3,5 +3,6 @@ from reminderlist import models
 
 # Register your models here.
 admin.site.register([
-    models.Todolist
+    models.Todolist,
+    models.Like
 ])
