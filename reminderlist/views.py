@@ -9,9 +9,19 @@ from django.contrib.auth.models import User
 @login_required(login_url='/auth/login')
 def index(request):
     todolist = models.Todolist.objects.all()
+    form = forms.CommentForm()
     context = {
-        "todolist":todolist
+        "todolists":todolist,
+        "form":form,
     }
+    if request.method=="POST":
+        form = forms.CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user=request.user
+            comment.post= todolist.get(id=15)
+            comment.save()
+
     return render(request,'reminderlist/index.html',context)
 
 @login_required(login_url='/auth/login')
@@ -51,3 +61,5 @@ def wall(request):
         "a":a
     }
     return render(request,'reminderlist/wall.html',context)
+
+
