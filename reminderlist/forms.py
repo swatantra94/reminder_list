@@ -1,9 +1,9 @@
 from django import forms
 from reminderlist import models
 
-class TodolistForms(forms.ModelForm):
+class PostForms(forms.ModelForm):
     class Meta:
-        model = models.Todolist
+        model = models.Post
         fields = '__all__'
 
 class CommentForm(forms.ModelForm):

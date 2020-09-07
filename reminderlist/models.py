@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Todolist(models.Model):
+class Post(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,default=1)
     title = models.CharField(max_length=1024)
     description = models.TextField()
@@ -13,11 +13,11 @@ class Todolist(models.Model):
 
 class Like(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    post= models.ForeignKey('Todolist',on_delete=models.CASCADE)
+    post= models.ForeignKey('Post',on_delete=models.CASCADE)
     likes = models.BooleanField(default=0)
 
 class Comment(models.Model):
-    post = models.ForeignKey('Todolist',on_delete=models.CASCADE)
+    post = models.ForeignKey('Post',on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     comment=models.CharField(max_length=256,null=True,blank=True)
 

@@ -8,41 +8,41 @@ from django.contrib.auth.models import User
 # Create your views here.
 @login_required(login_url='/auth/login')
 def index(request):
-    todolist = models.Todolist.objects.all()
+    posts = models.Post.objects.all()
     context = {
-        "todolists":todolist,
+        "posts":posts,
     }
-    return render(request,'reminderlist/index.html',context)
+    return render(request,'social/index.html',context)
 
 @login_required(login_url='/auth/login')
 def activity(request,pk):
-    activity = get_object_or_404(models.Todolist,pk=pk)
+    activity = get_object_or_404(models.Post,pk=pk)
     context = {
         "activity":activity
     }
-    return render(request, 'reminderlist/activity.html',context)
+    return render(request, 'social/activity.html',context)
     
 @login_required(login_url='/auth/login')
 def create(request):
-    form = forms.TodolistForms()
+    form = forms.PostForms()
     context={
         "form":form
     }
     if request.method=="POST":
-        form = forms.TodolistForms(request.POST)
+        form = forms.PostForms(request.POST)
         if form.is_valid():
             form = form.save()
             return HttpResponseRedirect('/todo/')
-    return render(request,'reminderlist/create.html',context)
+    return render(request,'social/create.html',context)
     
 @login_required(login_url='/auth/login')
 def delete(request,pk):
-    models.Todolist.objects.filter(pk=pk).delete()
+    models.Post.objects.filter(pk=pk).delete()
     return HttpResponseRedirect('/todo/')
 
 @login_required(login_url='/auth/login')
 def wall(request):
-    posts = models.Todolist.objects.all()
+    posts = models.Post.objects.all()
     a=[]
     for post in posts:
         if post.user.id==request.user.id:
@@ -50,11 +50,11 @@ def wall(request):
     context={
         "a":a
     }
-    return render(request,'reminderlist/wall.html',context)
+    return render(request,'social/wall.html',context)
 
 
 def comment(request, pk):
-    post = get_object_or_404(models.Todolist, pk=pk)
+    post = get_object_or_404(models.Post, pk=pk)
     if request.method == "POST":
         form = forms.CommentForm(request.POST)
         if form.is_valid():
@@ -65,4 +65,4 @@ def comment(request, pk):
             return HttpResponseRedirect('/todo/')
     else:
         form = forms.CommentForm()
-    return render(request, 'reminderlist/comment.html', {'form': form})
+    return render(request, 'social/comment.html', {'form': form})
